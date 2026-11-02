@@ -742,13 +742,13 @@ Thanks to the maintainers of the TeX ecosystem (TeX Live, MiKTeX, XeTeX, LuaTeX,
 
 ## Contributing and Support
 
-Repository: `REPLACE_WITH_REPOSITORY_URL`
+Repository: `github.com/biowess/laurevine-plum`
 
-**Bug reports.** Open an issue at `REPLACE_WITH_REPOSITORY_URL/issues`. Please include the Plum version (shown on the About page of the File menu), your operating system, which TeX engine and distribution you use (the LaTeX status in Preferences shows the detected compiler), the output of Help, Compilation Diagnostics for compile problems, and a minimal document that reproduces the issue.
+**Bug reports.** Open an issue at `github.com/biowess/laurevine-plum/issues`. Please include the Plum version (shown on the About page of the File menu), your operating system, which TeX engine and distribution you use (the LaTeX status in Preferences shows the detected compiler), the output of Help, Compilation Diagnostics for compile problems, and a minimal document that reproduces the issue.
 
 **Feature requests.** Open an issue at the same address and describe the workflow you are trying to support rather than only the control you would like.
 
-**Contributing code.** No contribution guidelines file exists in the repository yet (`REPLACE_WITH_CONTRIBUTION_POLICY_IF_ANY`). To get oriented:
+**Contributing code.** To get oriented:
 
 - Start with `CODEMAP.md`, which maps modules, global state and the ribbon model, and explains how to add a ribbon button.
 - `docs/RIBBON_MATRIX.md` inventories every ribbon control and the LaTeX it produces.
