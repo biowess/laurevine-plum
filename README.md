@@ -748,7 +748,7 @@ Repository: `github.com/biowess/laurevine-plum`
 
 **Feature requests.** Open an issue at the same address and describe the workflow you are trying to support rather than only the control you would like.
 
-**Contributing code.** To get oriented:
+**Contributing code.** To contribute code, just open a pull request against `main`. It is a solo project, so reviews may take a while. To get oriented:
 
 - Start with `CODEMAP.md`, which maps modules, global state and the ribbon model, and explains how to add a ribbon button.
 - `docs/RIBBON_MATRIX.md` inventories every ribbon control and the LaTeX it produces.
