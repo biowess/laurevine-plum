@@ -1,0 +1,41 @@
+/* Template catalogue for Design ▸ Templates. To add a template: drop a .tex file in this folder and add one entry here (`assets`: optional files, relative to this folder, copied next to the new document),
+   the gallery, tooltip and apply flow in js/app.js read this array and need no changes. `thumb` is a tiny inline SVG of the page layout (viewBox 0 0 40 52) drawn in the template's own palette on white paper
+   (so it matches the compiled look in light and dark mode); `colors` (paper, ink, accent, secondary, rule) and `tags` feed the cards in the Templates drop-down. The first 4 entries are the ones shown in the ribbon.
+   LP_CLASS_THUMBS holds the page previews for Design ▸ Document Classes (they follow the app accent). */
+(function () {
+  const INK = '#2a2e35', A = 'var(--accent)';
+  const T = (body) => '<svg viewBox="0 0 40 52" width="34" height="44" aria-hidden="true"><rect x=".5" y=".5" width="39" height="51" rx="2" fill="#fff" stroke="var(--border-2)"/>' + body + '</svg>';
+  const R = (x, y, w, h, f, o) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${Math.min(.6, h / 2)}" fill="${f}"${o ? ` opacity="${o}"` : ''}/>`;
+  const BX = (x, y, w, h, fill, stroke) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx=".8" fill="${fill}" stroke="${stroke}" stroke-width=".5"/>`;
+  const lines = (x, y0, w, n, gap, col, o) => Array.from({ length: n }, (_, i) => R(x, y0 + i * (gap || 3), i === n - 1 ? w * .62 : w, 1.3, col || INK, o || .4)).join('');
+  const PL = (pts, col, w) => `<polyline points="${pts}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
+  window.LP_CLASS_THUMBS = {
+    article: T(R(9, 6, 22, 2.6, INK, .85) + R(14, 10.5, 12, 1.2, INK, .4) + lines(8, 15.5, 24, 2, 2.8, INK, .35) + R(5, 23.5, 13, 1.9, A) + lines(5, 27, 30, 3) + R(5, 37.2, 13, 1.9, A) + lines(5, 40.7, 30, 3)),
+    report: T(R(5, 6, 10, 1.2, INK, .45) + R(5, 9.5, 22, 3, A) + R(5, 15, 30, .6, A, .5) + lines(5, 19, 30, 3) + R(5, 29.5, 14, 1.9, INK, .8) + lines(5, 33, 30, 3) + R(5, 43, 10, 1.5, INK, .6) + lines(5, 46, 30, 1)),
+    book: T(R(.5, .5, 4.5, 51, A, .14) + R(14, 13, 14, 1.1, INK, .45) + '<text x="20.5" y="27" text-anchor="middle" font-family="Georgia,\'Times New Roman\',serif" font-size="12" font-weight="700" fill="var(--accent)">1</text>' + R(11, 30, 22, 2.4, INK, .85) + R(18, 34.5, 6, .9, A) + lines(11, 38.5, 24, 3) + R(18.5, 48.2, 4, 1, INK, .45)),
+    letter: T(R(22, 5, 13, 1.3, INK, .6) + R(24.5, 8, 10.5, 1.1, INK, .35) + R(24.5, 10.8, 10.5, 1.1, INK, .35) + R(24, 15.5, 11, 1.1, INK, .4) + R(5, 20, 14, 1.2, INK, .55) + R(5, 23, 10, 1.1, INK, .35) + R(5, 26, 12, 1.1, INK, .35) + R(5, 31, 10, 1.3, INK, .55) + lines(5, 35, 30, 3) + R(22, 44, 9, 1.1, INK, .5) + '<path d="M23 49 q1.5 -4 3 -1.2 t3 -.2 t3 -1" fill="none" stroke="var(--accent)" stroke-width=".9" stroke-linecap="round"/>')
+  };
+  window.LP_TEMPLATES = [
+    { id: 'simple', name: 'Simple', file: 'simple.tex', desc: 'Clean general-purpose article: title, sections and plain body text.',
+      tags: 'Notes · Essays · General writing', colors: ['#FFFFFF', '#222222', '#2B5C84', '#666666', '#CCCCCC'],
+      thumb: T(R(5, 6, 22, 2.8, '#222') + R(5, 11, 11, 1.3, '#666', .6) + R(5, 14.5, 8, 1.1, '#2B5C84') + R(5, 20, 13, 2, '#222') + R(5, 22.8, 30, .5, '#ccc') + lines(5, 26, 30, 3) + R(5, 37, 13, 2, '#222') + R(5, 39.8, 30, .5, '#ccc') + R(5, 43, 1.2, 5.5, '#2B5C84') + lines(8, 43.4, 26, 2)) },
+    { id: 'homework', name: 'Simple Homework', file: 'simple-homework.tex', desc: 'Article class with a running header, numbered problems and solutions.',
+      tags: 'Problem sets · Coursework · Worksheets', colors: ['#F3F3F1', '#1C1C1C', '#1F3A5F', '#5C6066', '#CFCFCF'],
+      thumb: T(R(5, 3.8, 9, 1.2, '#5C6066', .8) + R(26, 3.8, 9, 1.2, '#5C6066', .8) + R(5, 6.4, 30, .45, '#cfcfcf') + R(5, 10, 21, 2.6, '#1c1c1c') + BX(5, 15, 30, 8.5, '#F3F3F1', '#e4e4e0') + lines(7.5, 17.2, 25, 2, 3, '#1c1c1c', .38) + R(5, 26.5, 15, 2, '#1F3A5F') + R(5, 29.3, 30, .8, '#1F3A5F') + lines(5, 32.5, 30, 2) + BX(5, 39.5, 30, 9, '#fff', '#cfcfcf') + R(7, 43, 26, .4, '#cfcfcf') + R(7, 46, 26, .4, '#cfcfcf')) },
+    { id: 'article', name: 'Academic Article', file: 'academic-article.tex', desc: 'Title, abstract, sections, theorems and a bibliography.',
+      tags: 'Journal papers · Preprints · Two-column', colors: ['#F6F2F5', '#20232A', '#6E2F4F', '#2E5E63', '#CDBBC6'],
+      thumb: T(R(5, 4.5, 30, 1.6, '#6E2F4F') + R(9, 8.5, 22, 2.6, '#20232A') + R(13, 12.8, 14, 1.2, '#5F6470', .7) + R(5, 16, 30, .8, '#6E2F4F') + R(5, 16.8, 30, 7.5, '#F6F2F5') + lines(7, 18.4, 26, 2, 2.8, '#6E2F4F', .4) + R(5, 24.3, 30, .45, '#CDBBC6') + R(5, 28, 8, 1.5, '#6E2F4F') + lines(5, 31.5, 14, 5, 3) + R(21, 28, 8, 1.5, '#6E2F4F') + lines(21, 31.5, 14, 5, 3) + R(24, 40.5, 5, 1.3, '#2E5E63', .9) + R(5, 47.5, 10, .4, '#CDBBC6')) },
+    { id: 'sample', name: 'Sample Article', file: 'sample-article.tex', assets: ['figures/adaptive-curve.pdf', 'figures/recovery.pdf', 'figures/measurements.pdf'], desc: 'Sample report on adaptive sampling with equations, lists and figures.',
+      tags: 'Reports · Figures · Equations', colors: ['#EEF2F6', '#1A1A1A', '#1F3A5F', '#2E7D8C', '#5B6573'],
+      thumb: T(R(8, 5, 24, 2.6, '#1A1A1A') + R(13, 9.5, 14, 1.3, '#5B6573', .7) + lines(8, 13, 24, 3, 2.8, '#1A1A1A', .38) + R(5, 23, 14, 1.9, '#1F3A5F') + lines(5, 26.5, 30, 2, 2.8, '#1A1A1A', .38) + BX(8, 32, 24, 9.5, '#EEF2F6', '#d4dce6') + PL('10,40 15,38.5 20,35.5 25,34.8 30,34.4', '#2E7D8C', .9) + PL('10,40.4 15,40 20,39 25,38 30,37.8', '#1F3A5F', .7) + R(13, 42.8, 14, .9, '#5B6573', .5) + R(5, 45.8, 10, 1.5, '#2E7D8C') + lines(5, 48.6, 30, 1, 3, '#1A1A1A', .38)) },
+    { id: 'lab', name: 'Laboratory Report', file: 'laboratory-report.tex', desc: 'Objective, apparatus, procedure, data table, analysis and conclusion.',
+      tags: 'Lab courses · Experiments · Data analysis', colors: ['#F1F5F9', '#1E2A35', '#1F4E79', '#B04A2F', '#2C6B6F'],
+      thumb: T(R(5, 4.5, 22, 2.6, '#1E2A35') + R(5, 8.6, 30, .8, '#1F4E79') + R(5, 11.5, 2, 1.6, '#1F4E79') + R(8.5, 11.5, 12, 1.6, '#1F4E79') + lines(5, 15, 30, 2, 2.8, '#8C6D1F', .6) + R(5, 22, 2, 1.6, '#1F4E79') + R(8.5, 22, 14, 1.6, '#1F4E79') + R(5, 25.5, 30, 2.8, '#DCE6EF') + R(7, 26.5, 6, .9, '#1F4E79') + R(17, 26.5, 6, .9, '#1F4E79') + R(27, 26.5, 6, .9, '#1F4E79') + R(7, 29.9, 5, .9, '#1E2A35', .35) + R(17, 29.9, 5, .9, '#1E2A35', .35) + R(27, 29.9, 5, .9, '#1E2A35', .35) + R(5, 29, 30, .35, '#9FB1C1') + R(5, 31.6, 30, .35, '#9FB1C1') + R(7, 32.5, 5, .9, '#1E2A35', .35) + R(17, 32.5, 5, .9, '#1E2A35', .35) + R(27, 32.5, 5, .9, '#1E2A35', .35) + R(5, 34.2, 30, .35, '#9FB1C1') + R(5, 38, 30, 6.5, '#FBF0EE') + R(5, 38, 1.2, 6.5, '#A63D2F') + R(8, 39.7, 22, 1.1, '#A63D2F', .7) + R(8, 42, 16, 1.1, '#A63D2F', .5)) },
+    { id: 'manuscript', name: 'Research Manuscript', file: 'research-manuscript.tex', assets: ['research-manuscript.bib', 'figures/fig1-timecourse.png', 'figures/fig2-scatter.png', 'figures/fig3-comparison.png'], desc: 'Double-spaced, line-numbered manuscript for journal submission.',
+      tags: 'Journal submission · Peer review · Line numbers', colors: ['#FFFFFF', '#111111', '#1F3A7A'],
+      thumb: T(R(8, 3.5, 24, 2.2, '#111') + R(12, 7, 16, 1.1, '#666', .7) + Array.from({ length: 8 }, (_, i) => R(2.6, 11 + i * 4.7, 1.6, 1, '#9a9a9a', .7) + (i === 0 ? R(7, 11, 10, 1.5, '#111') : R(7, 11 + i * 4.7, i === 7 ? 16 : 28, 1.3, INK, .38))).join('') + R(21, 11 + 3 * 4.7, 3.2, 1.3, '#1F3A7A', .9)) },
+    { id: 'book', name: 'Book / Long Report', file: 'book-long-report.tex', assets: ['figures/book-growth.png', 'figures/book-categories.png'], desc: 'Book class with front matter, chapters, appendix and back matter.',
+      tags: 'Books · Theses · Long reports', colors: ['#FFFFFF', '#1E1B1A', '#7A2E3A', '#5B3A3F', '#6B5B4E'],
+      thumb: T(R(26, 4, 9, 1, '#6B5B4E', .7) + R(13, 14, 14, 1.1, '#6B5B4E', .8) + '<text x="20" y="28" text-anchor="middle" font-family="Georgia,\'Times New Roman\',serif" font-size="12" font-weight="700" fill="#7A2E3A">1</text>' + R(9, 31, 22, 2.4, '#3F2A2E') + R(17, 35.5, 6, .9, '#7A2E3A') + lines(9, 39.5, 22, 3, 3, '#1E1B1A', .38) + R(18, 48.6, 4, 1, '#6B5B4E', .6)) }
+  ];
+})();

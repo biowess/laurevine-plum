@@ -1,0 +1,114 @@
+{
+  "name": "laurevine-plum",
+  "productName": "Laurevine Plum",
+  "version": "1.0.0",
+  "description": "A fast, local LaTeX editor with a Word-style ribbon.",
+  "main": "main.js",
+  "desktopName": "com.biowess.laurevineplum.desktop",
+  "homepage": "https://biowess-dev.github.io/Biowess",
+  "private": true,
+  "license": "Apache-2.0",
+  "author": {
+    "name": "BIOWESS",
+    "email": "biowess@proton.me",
+    "url": "https://biowess-dev.github.io/Biowess"
+  },
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win --x64",
+    "dist:linux": "electron-builder --linux --x64"
+  },
+  "devDependencies": {
+    "electron": "^44.4.5",
+    "electron-builder": "^26.18.0"
+  },
+  "build": {
+    "appId": "com.biowess.laurevineplum",
+    "copyright": "Copyright 2026 BIOWESS",
+    "directories": {
+      "output": "dist"
+    },
+    "publish": null,
+    "artifactName": "${name}-${version}-${os}-${arch}.${ext}",
+    "asar": true,
+    "asarUnpack": [
+      "server/chart.py",
+      "fonts/**/*",
+      "assets/splash.html",
+      "assets/splash.png"
+    ],
+    "files": [
+      "main.js",
+      "preload.js",
+      "index.html",
+      "server/**/*",
+      "css/**/*",
+      "js/**/*",
+      "docs/**/*",
+      "templates/**/*",
+      "fonts/**/*",
+      "assets/**/*",
+      "LICENSE.txt",
+      "NOTICE",
+      "THIRDPARTYNOTICE.md",
+      "TRADEMARK.md",
+      "README.md",
+      "CHANGELOG.md",
+      "!fonts/.cache/**",
+      "!templates/figures/generate_sample_article_figures.py",
+      "!dist/**",
+      "!**/*.{zip,7z,rar,tar,gz,tgz,map,log,tmp,bak,orig,pyc}",
+      "!**/{.DS_Store,Thumbs.db,__pycache__,.git,.vscode,.idea}"
+    ],
+    "win": {
+      "icon": "assets/appicon.png",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "linux": {
+      "icon": "build/icons",
+      "executableName": "laurevine-plum",
+      "syncDesktopName": true,
+      "category": "Office",
+      "desktop": {
+        "entry": {
+          "GenericName": "LaTeX Editor",
+          "Keywords": "LaTeX;TeX;XeLaTeX;Editor;Typesetting;Document;"
+        }
+      },
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "tar.gz",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    }
+  }
+}

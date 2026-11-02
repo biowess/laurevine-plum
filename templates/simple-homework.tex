@@ -1,0 +1,304 @@
+% !TEX program = xelatex
+% ---------------------------------------------------------------------------
+% Simple Homework -- an academic worksheet.
+% Everything above \begin{document} is styling. Edit the "Assignment details"
+% block, then replace the example problems in the body. Lines tagged
+% CUSTOMIZE are the usual places to change the look.
+% ---------------------------------------------------------------------------
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Packages ----------
+\usepackage{fontspec}
+\usepackage[a4paper,margin=2.5cm]{geometry}   % CUSTOMIZE: page margins
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{booktabs,tabularx,array}
+
+% ---------- Fonts ----------
+% TeX Gyre Termes is the primary font. TeX Gyre Heros is not in the bundled
+% font catalogue, so labels and headings use Termes (bold, letter-spaced).
+\setmainfont{TeX Gyre Termes}                 % CUSTOMIZE: body font
+
+% ---------- Palette: neutrals plus one academic accent ----------
+\definecolor{Ink}{HTML}{1C1C1C}      % body text
+\definecolor{Muted}{HTML}{5C6066}    % running header, notes, small labels
+\definecolor{Rule}{HTML}{CFCFCF}     % hairlines and answer-box borders
+\definecolor{Shade}{HTML}{F3F3F1}    % instruction box background
+\definecolor{Accent}{HTML}{1F3A5F}   % CUSTOMIZE: the single accent (navy)
+\AtBeginDocument{\color{Ink}}
+
+% ---------- Text and spacing ----------
+\linespread{1.1}                                       % CUSTOMIZE: line spacing
+\setlength{\parskip}{6pt plus 1.5pt minus 1pt}         % CUSTOMIZE: paragraph spacing
+\setlength{\emergencystretch}{3em}
+\setlength{\fboxsep}{8pt}
+\renewcommand{\arraystretch}{1.25}
+\setlength{\heavyrulewidth}{0.8pt}
+\setlength{\lightrulewidth}{0.4pt}
+\setcounter{secnumdepth}{0}                            % \section headings are unnumbered
+
+% ---------- Running header and footer ----------
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{Muted}\coursename}
+\fancyhead[R]{\small\color{Muted}\studentname}
+\fancyfoot[C]{\small\color{Muted}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{{\color{Rule}\hrule height\headrulewidth width\headwidth}\vskip-\headrulewidth}
+\fancypagestyle{plain}{%  first page: footer only
+  \fancyhf{}\fancyfoot[C]{\small\color{Muted}\thepage}%
+  \renewcommand{\headrulewidth}{0pt}}
+
+% ---------- Section headings (use \section*{Part A -- ...}) ----------
+\titleformat{\section}
+  {\normalsize\bfseries\color{Accent}\addfontfeature{LetterSpace=8}}
+  {}{0pt}{\MakeUppercase}
+  [\vspace{3pt}{\color{Accent}\titlerule[0.8pt]}]
+\titleformat{\subsection}{\large\bfseries\color{Ink}}{}{0pt}{}
+\titlespacing*{\section}{0pt}{2.4ex plus 0.5ex minus 0.2ex}{1.4ex plus 0.2ex}
+\titlespacing*{\subsection}{0pt}{2ex plus 0.4ex minus 0.2ex}{0.9ex plus 0.2ex}
+
+% ---------- Lists: parts, nested parts and multiple choice ----------
+\setlist{itemsep=0.3em, topsep=0.3em, parsep=0.3em, partopsep=0pt}
+\setlist[itemize,1]{label=\textcolor{Accent}{\textbullet}, leftmargin=1.6em}
+\setlist[enumerate,1]{label=\textcolor{Accent}{\bfseries\arabic*.}, leftmargin=1.8em}
+% \begin{parts} \item ... \end{parts}  gives (a), (b), ...; nest it for (i), (ii), ...
+\newlist{parts}{enumerate}{2}
+\setlist[parts,1]{label=\textcolor{Accent}{\bfseries(\alph*)}, leftmargin=2.4em, itemsep=0.5em}
+\setlist[parts,2]{label=\textcolor{Accent}{(\roman*)}, leftmargin=2.2em, itemsep=0.3em}
+% \begin{choices} \item ... \end{choices}  gives A., B., C., D.
+\newlist{choices}{enumerate}{1}
+\setlist[choices,1]{label=\textcolor{Accent}{\bfseries\Alph*.}, leftmargin=2em,
+  itemsep=0.15em, parsep=0pt, topsep=0.3em}
+
+% ---------- Problems ----------
+% \problem[points]{Topic}   (the points argument is optional)
+\newcounter{problem}
+\numberwithin{equation}{problem}   % equations read (3.1), (3.2), ... per problem
+\newcommand{\problem}[2][]{%
+  \refstepcounter{problem}%
+  \par\addvspace{1.2\bigskipamount}%
+  \noindent{\large\bfseries\color{Accent}Problem~\theproblem}%
+  \enspace{\large\bfseries\color{Ink}#2}\hfill{\small\color{Muted}#1}\par\nobreak
+  \vspace{-0.2em}\noindent{\color{Rule}\rule{\linewidth}{0.4pt}}\par\nobreak}
+
+% ---------- Solution, explanation and note styles ----------
+% \begin{solution}[Label] ... \end{solution}  (label defaults to "Solution")
+\newenvironment{solution}[1][Solution]
+  {\par\smallskip\noindent\textbf{\color{Accent}#1.}\enspace\ignorespaces}
+  {\par\smallskip}
+% \begin{note}[Label] ... \end{note}  (label defaults to "Note"; try [Hint])
+\newenvironment{note}[1][Note]
+  {\par\small\color{Muted}\noindent\textbf{#1.}\enspace\ignorespaces}
+  {\par\smallskip}
+\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}   % end-of-proof mark
+
+% ---------- Instruction box (shaded) ----------
+\newsavebox{\LPShadeBox}
+\newenvironment{instructions}[1][Instructions]
+  {\par\medskip\begin{lrbox}{\LPShadeBox}%
+   \begin{minipage}{\dimexpr\linewidth-2\fboxsep\relax}%
+   \setlength{\parskip}{4pt}\small
+   {\bfseries\color{Accent}\addfontfeature{LetterSpace=6}\MakeUppercase{#1}}\par\smallskip}
+  {\end{minipage}\end{lrbox}%
+   \noindent\colorbox{Shade}{\usebox{\LPShadeBox}}\par\medskip}
+
+% ---------- Answer areas ----------
+% \begin{answer}[height] ... \end{answer}  boxed area; students write inside it
+\newsavebox{\LPAnswerBox}
+\newenvironment{answer}[1][3cm]
+  {\par\medskip\begin{lrbox}{\LPAnswerBox}%
+   \begin{minipage}[t][#1][t]{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}%
+   \setlength{\parskip}{4pt}%
+   {\scriptsize\bfseries\color{Muted}\addfontfeature{LetterSpace=6}ANSWER}\par\smallskip}
+  {\end{minipage}\end{lrbox}%
+   \noindent\fcolorbox{Rule}{white}{\usebox{\LPAnswerBox}}\par\medskip}
+% \answerlines[n]  n ruled writing lines (default 3)
+\makeatletter
+\newcommand{\answerlines}[1][3]{%
+  \par\@tempcnta=#1\relax
+  \@whilenum\@tempcnta>\z@\do{%
+    \vspace{1.1em}\noindent{\color{Rule}\rule{\linewidth}{0.4pt}}\par
+    \advance\@tempcnta\m@ne}}
+\makeatother
+
+% ---------- Tables ----------
+\newcolumntype{C}{>{\centering\arraybackslash}X}       % centred, stretching column
+\newcommand{\headcell}[1]{\textbf{\color{Accent}#1}}   % table column heading
+\newcommand{\blankcell}{\rule[-0.8em]{0pt}{2.2em}}     % empty cell tall enough to write in
+\newcommand{\tablecaption}[1]{\par\smallskip\noindent{\small\bfseries\color{Muted}#1}\par\nobreak\smallskip}
+
+% ---------- Header block ----------
+\newcommand{\infofield}[2]{%
+  {\scriptsize\bfseries\color{Muted}\addfontfeature{LetterSpace=6}\MakeUppercase{#1}}\par\vspace{1pt}#2}
+\newcommand{\worksheetheader}{%
+  \thispagestyle{plain}%
+  \noindent{\small\bfseries\color{Accent}\addfontfeature{LetterSpace=8}%
+    \MakeUppercase{Assignment \assignmentnumber}\par}%
+  \vspace{0.2em}%
+  \noindent{\fontsize{23}{27}\selectfont\bfseries\color{Ink}\assignmenttitle\par}%
+  \vspace{0.5em}%
+  \noindent{\color{Ink}\rule{\linewidth}{0.8pt}}\par\vspace{0.2em}%
+  \noindent\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+    \infofield{Student}{\studentname} & \infofield{Course}{\coursename} \\[0.7em]
+    \infofield{Instructor}{\instructorname} & \infofield{Date}{\assignmentdate} \\
+  \end{tabularx}%
+  \par\vspace{0.1em}\noindent{\color{Rule}\rule{\linewidth}{0.4pt}}\par}
+
+% ---------- Links (load last) ----------
+\usepackage[colorlinks=true,linkcolor=Accent,citecolor=Accent,urlcolor=Accent]{hyperref}
+\urlstyle{same}
+
+% ---------- Assignment details ----------
+% CUSTOMIZE: fill these in; they feed the header block and the running header.
+\newcommand{\assignmentnumber}{1}
+\newcommand{\assignmenttitle}{Calculus and Proof}
+\newcommand{\studentname}{Student Name}
+\newcommand{\coursename}{MATH 201 -- Calculus II}
+\newcommand{\instructorname}{Dr.\ Instructor Name}
+\newcommand{\assignmentdate}{\today}
+
+\begin{document}
+
+\worksheetheader
+
+\begin{instructions}
+  \begin{itemize}
+    \item Show all work; answers without justification receive partial credit.
+    \item Write final answers in the boxes provided and attach extra pages if needed.
+    \item Calculators are not permitted.
+  \end{itemize}
+\end{instructions}
+
+\section*{Part A -- Computation}
+
+% ===== Problem with parts and nested sub-parts =====
+\problem[10 pts]{Roots and Integrals}
+Let $f(x) = x^{2} - 4x + 3$.
+\begin{parts}
+  \item Find all real roots of $f$.
+  \item Evaluate the definite integral
+    \[
+      \int_{0}^{3} f(x)\,dx.
+    \]
+    \begin{parts}
+      \item Find an antiderivative $F$ of $f$.
+      \item Use $F$ to evaluate the integral.
+    \end{parts}
+  \item Explain in one sentence why your answer to (b) does not mean the region
+    between the graph and the $x$-axis has zero area.
+\end{parts}
+
+\begin{solution}[Solution to (a)]
+  Factoring gives $f(x) = (x-1)(x-3)$, so the roots are $x = 1$ and $x = 3$.
+\end{solution}
+
+\begin{answer}[3.5cm]
+\end{answer}
+
+% ===== Multiple choice =====
+\problem[4 pts]{Multiple Choice}
+\begin{note}
+  Circle exactly one option for each question.
+\end{note}
+\begin{parts}
+  \item What is the derivative of $\sin(x^{2})$?
+    \begin{choices}
+      \item $\cos(x^{2})$
+      \item $2x\cos(x^{2})$
+      \item $-2x\sin(x^{2})$
+      \item $2x\sin(x^{2})$
+    \end{choices}
+  \item Which statement about the series $\displaystyle\sum_{n=1}^{\infty} \frac{1}{n^{2}}$ is true?
+    \begin{choices}
+      \item It diverges to infinity.
+      \item It converges.
+      \item It oscillates without a limit.
+      \item Its convergence cannot be decided.
+    \end{choices}
+\end{parts}
+
+\section*{Part B -- Reasoning}
+
+% ===== Proof and explanation =====
+\problem[6 pts]{Proof by Induction}
+Prove that for every integer $n \ge 1$,
+\begin{equation}\label{eq:odd-sum}
+  1 + 3 + 5 + \cdots + (2n-1) = n^{2}.
+\end{equation}
+\begin{note}[Hint]
+  Use induction on $n$.
+\end{note}
+
+\begin{proof}
+  \emph{Base case.} For $n = 1$ the left side is $1 = 1^{2}$.
+
+  \emph{Inductive step.} Assume \eqref{eq:odd-sum} holds for $n = k$. Then
+  \begin{align*}
+    1 + 3 + \cdots + (2k-1) + (2k+1) &= k^{2} + (2k+1) \\
+                                     &= (k+1)^{2},
+  \end{align*}
+  so the statement holds for $n = k+1$. By induction it holds for all $n \ge 1$.
+\end{proof}
+
+\begin{solution}[Explanation]
+  The identity says an $n \times n$ square can be built from L-shaped layers
+  containing $1, 3, 5, \dots$ unit squares.
+\end{solution}
+
+\answerlines[3]
+
+% ===== Table for answers or observations =====
+\problem[5 pts]{Table of Values}
+Complete the table for the function $f$ from Problem~1, then record your observations.
+
+\tablecaption{Table 1. Values of $f(x) = x^{2} - 4x + 3$.}
+\noindent
+\begin{tabularx}{\linewidth}{@{}CCC@{}}
+  \toprule
+  \headcell{$x$} & \headcell{$f(x)$} & \headcell{Sign of $f(x)$} \\
+  \midrule
+  0 & 3 & $+$ \\
+  1 & \blankcell & \blankcell \\
+  2 & \blankcell & \blankcell \\
+  3 & \blankcell & \blankcell \\
+  4 & \blankcell & \blankcell \\
+  \bottomrule
+\end{tabularx}
+
+\begin{answer}[3cm]
+\end{answer}
+
+% ---------------------------------------------------------------------------
+% COPY-AND-EDIT SKELETONS: remove the leading % to use. Add as many as needed.
+%
+% \problem[5 pts]{Topic}
+% Problem statement.
+% \begin{parts}
+%   \item First question.
+%   \item Second question, with sub-questions:
+%     \begin{parts}
+%       \item First sub-question.
+%       \item Second sub-question.
+%     \end{parts}
+% \end{parts}
+% \begin{answer}[3cm]
+% \end{answer}
+%
+% \problem[2 pts]{Multiple choice}
+% Question text.
+% \begin{choices}
+%   \item First option
+%   \item Second option
+%   \item Third option
+%   \item Fourth option
+% \end{choices}
+% ---------------------------------------------------------------------------
+
+\end{document}

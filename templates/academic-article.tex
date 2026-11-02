@@ -1,0 +1,357 @@
+% !TEX program = xelatex
+%==============================================================================
+%  ACADEMIC ARTICLE  -  two-column scientific article (XeLaTeX)
+%  Fonts : TeX Gyre Pagella (serif text) + TeX Gyre Heros (sans headings)
+%  Layout: A4, 10 pt, genuine two-column body with a full-width title block
+%  Edit  : the ARTICLE FRONT MATTER block (just above \begin{document}) and the
+%          body. The style system in between needs no changes.
+%==============================================================================
+\documentclass[10pt,a4paper,twocolumn]{article}
+
+%------------------------------------------------------------------------------
+%  FONTS  (bundled with the app; headings and metadata use \plumsans)
+%------------------------------------------------------------------------------
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX}
+\setmainfont{TeX Gyre Pagella}            % primary serif
+\newfontfamily\plumsans{TeX Gyre Heros}   % complementary sans-serif
+
+%------------------------------------------------------------------------------
+%  PAGE LAYOUT  (margins, column gutter)
+%------------------------------------------------------------------------------
+\usepackage[a4paper,top=24mm,bottom=26mm,left=18mm,right=18mm,%
+  headheight=14pt,headsep=9mm,footskip=12mm]{geometry}
+\setlength{\columnsep}{8mm}
+\setlength{\columnseprule}{0pt}
+\setlength{\parindent}{1.1em}
+\setlength{\parskip}{0pt}
+\tolerance=900
+\emergencystretch=2em
+\clubpenalty=5000
+\widowpenalty=5000
+
+%------------------------------------------------------------------------------
+%  COLORS  (restrained editorial palette; hex swatches are editable)
+%------------------------------------------------------------------------------
+\usepackage[table]{xcolor}
+\definecolor{plumink}{HTML}{20232A}      % title and author names
+\definecolor{plumaccent}{HTML}{6E2F4F}   % primary accent: headings, rules, abstract
+\definecolor{plumteal}{HTML}{2E5E63}     % secondary accent: links, markers
+\definecolor{plummuted}{HTML}{5F6470}    % running heads, affiliations, notes
+\definecolor{plumtint}{HTML}{F6F2F5}     % abstract background
+\definecolor{plumrule}{HTML}{CDBBC6}     % hairlines
+\definecolor{plumorcid}{HTML}{3F7D20}    % ORCID marker
+
+%------------------------------------------------------------------------------
+%  PACKAGES
+%------------------------------------------------------------------------------
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{hyperref}
+
+%------------------------------------------------------------------------------
+%  LINKS
+%------------------------------------------------------------------------------
+\hypersetup{colorlinks=true,linkcolor=plumteal,citecolor=plumteal,
+  urlcolor=plumaccent,filecolor=plumaccent}
+
+%------------------------------------------------------------------------------
+%  HEADINGS  (sans-serif, accent color, thin rule under sections)
+%------------------------------------------------------------------------------
+\titleformat{\section}
+  {\plumsans\bfseries\normalsize\color{plumaccent}}{\thesection}{0.7em}
+  {\MakeUppercase}[{\color{plumrule}\titlerule[0.5pt]}]
+\titleformat{\subsection}
+  {\plumsans\bfseries\small\color{plumink}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}[runin]
+  {\normalfont\itshape\color{plumink}}{\thesubsubsection}{0.5em}{}[.]
+\titlespacing*{\section}{0pt}{2ex plus .4ex minus .2ex}{1ex plus .2ex}
+\titlespacing*{\subsection}{0pt}{1.5ex plus .3ex minus .2ex}{0.6ex plus .1ex}
+\titlespacing*{\subsubsection}{0pt}{1.2ex plus .2ex}{0.6em}
+
+%------------------------------------------------------------------------------
+%  RUNNING HEADS AND FOOTERS  (first page: footer only)
+%------------------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\plumsans\footnotesize\color{plummuted}\runningauthors}
+\fancyhead[R]{\plumsans\footnotesize\color{plummuted}\runningtitle}
+\fancyfoot[L]{\plumsans\footnotesize\color{plummuted}\journalname}
+\fancyfoot[R]{\plumsans\footnotesize\color{plumaccent}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{{\color{plumrule}\hrule height \headrulewidth width \headwidth}\vskip-\headrulewidth}
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[L]{\plumsans\footnotesize\color{plummuted}\journalname}%
+  \fancyfoot[R]{\plumsans\footnotesize\color{plumaccent}\thepage}%
+  \renewcommand{\headrulewidth}{0pt}}
+
+%------------------------------------------------------------------------------
+%  THEOREMS, DEFINITIONS, PROOFS, EQUATIONS
+%------------------------------------------------------------------------------
+\newtheoremstyle{plumplain}
+  {6pt plus 2pt minus 1pt}{6pt plus 2pt minus 1pt}{\itshape}{0pt}
+  {\plumsans\bfseries\color{plumaccent}}{.}{0.6em}{}
+\newtheoremstyle{plumdef}
+  {6pt plus 2pt minus 1pt}{6pt plus 2pt minus 1pt}{\normalfont}{0pt}
+  {\plumsans\bfseries\color{plumaccent}}{.}{0.6em}{}
+\theoremstyle{plumplain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{plumdef}
+\newtheorem{definition}[theorem]{Definition}
+\renewcommand{\qedsymbol}{\textcolor{plumaccent}{\ensuremath{\blacksquare}}}
+\numberwithin{equation}{section}
+
+%------------------------------------------------------------------------------
+%  LISTS, FOOTNOTES, FLOATS (captions, tables)
+%------------------------------------------------------------------------------
+\setlist{itemsep=1.5pt,topsep=3pt,parsep=0pt,partopsep=0pt,leftmargin=1.5em}
+\setlist[itemize]{label=\textcolor{plumaccent}{\textbullet}}
+\renewcommand{\footnoterule}{\kern-3pt{\color{plumrule}\hrule width 0.35\columnwidth height 0.4pt}\kern 2.6pt}
+\DeclareCaptionFont{plumsans}{\plumsans}
+\DeclareCaptionFont{plumaccent}{\color{plumaccent}}
+\captionsetup{font=small,labelfont={plumsans,bf,plumaccent},labelsep=period,
+  justification=justified,singlelinecheck=false,skip=6pt}
+\captionsetup[table]{position=top}
+
+%------------------------------------------------------------------------------
+%  TITLE BLOCK AND ABSTRACT  (full width above the two columns)
+%  Used as  \twocolumn[{\maketitle \begin{abstract}...\end{abstract}}]
+%------------------------------------------------------------------------------
+\makeatletter
+\gdef\plum@affiliations{}
+\gdef\plum@correspondence{}
+\newcommand{\affiliations}[1]{\gdef\plum@affiliations{#1}}
+\newcommand{\affiliation}[2]{\textsuperscript{\plumsans\color{plumteal}#1}\,#2\par}
+\newcommand{\correspondence}[2]{\gdef\plum@correspondence{%
+  \textsuperscript{\plumsans\color{plumteal}*}\,Corresponding author: #1, \href{mailto:#2}{#2}}}
+\newcommand{\orcid}[1]{\href{https://orcid.org/#1}{%
+  \textcolor{plumorcid}{\plumsans\bfseries\scriptsize iD}\,%
+  {\plumsans\scriptsize\textcolor{plummuted}{#1}}}}
+\newcommand{\plumauthor}[3]{\mbox{%
+  {\fontsize{12}{14}\selectfont\color{plumink}#1\textsuperscript{\plumsans\color{plumteal}#2}}%
+  \enspace\orcid{#3}}\hspace{1.8em plus 0.8em}}
+\renewcommand{\maketitle}{%
+  \begingroup
+  \normalfont\raggedright\setlength{\parindent}{0pt}%
+  \noindent{\color{plumaccent}\rule{\textwidth}{2.2pt}}\par\vspace{6pt}%
+  \noindent\makebox[\textwidth][s]{\plumsans\small\bfseries\color{plumaccent}%
+    \expandafter\MakeUppercase\expandafter{\articletype}\hfill
+    \mdseries\color{plummuted}\@date}\par\vspace{10pt}%
+  {\fontsize{22}{26}\selectfont\bfseries\color{plumink}\@title\par}\vspace{12pt}%
+  \@author\par\vspace{8pt}%
+  {\plumsans\footnotesize\color{plummuted}\plum@affiliations\par}%
+  {\plumsans\footnotesize\color{plummuted}\plum@correspondence\par}%
+  \vspace{12pt}%
+  \endgroup
+  \thispagestyle{plain}}
+\makeatother
+\newsavebox{\plumabsbox}
+\renewenvironment{abstract}{%
+  \par\setlength{\fboxsep}{10pt}%
+  \begin{lrbox}{\plumabsbox}%
+  \begin{minipage}{\dimexpr\textwidth-2\fboxsep\relax}%
+  \small\setlength{\parindent}{0pt}%
+  {\plumsans\bfseries\footnotesize\color{plumaccent}%
+    \expandafter\MakeUppercase\expandafter{\abstractname}}\par\vspace{3pt}%
+  \noindent\ignorespaces}{%
+  \end{minipage}\end{lrbox}%
+  \noindent{\color{plumaccent}\rule{\textwidth}{1.2pt}}\par\nointerlineskip
+  \noindent\colorbox{plumtint}{\usebox{\plumabsbox}}\par\nointerlineskip
+  \noindent{\color{plumrule}\rule{\textwidth}{0.4pt}}\par\vspace{8pt}}
+\newcommand{\keywords}[1]{\par\medskip
+  \noindent{\color{plumrule}\rule{\linewidth}{0.4pt}}\par\smallskip
+  \noindent{\plumsans\bfseries\scriptsize\color{plumaccent}KEYWORDS}\quad #1\par}
+
+%==============================================================================
+%  ARTICLE FRONT MATTER  -  edit this block
+%==============================================================================
+\newcommand{\journalname}{Journal of Illustrative Research}   % footer, left
+\newcommand{\articletype}{Research Article}                   % label above the title
+\newcommand{\runningtitle}{Short Title of the Article}        % running head, right
+\newcommand{\runningauthors}{First Author et al.}             % running head, left
+
+\title{Title of the Article\\[0.5em] {\large A Concise Subtitle That Clarifies the Scope}}
+\author{%
+  \plumauthor{First Author}{1}{0000-0000-0000-0001}%
+  \plumauthor{Second Author}{1,2}{0000-0000-0000-0002}%
+  \plumauthor{Third Author}{2,*}{0000-0000-0000-0003}}
+\affiliations{%
+  \affiliation{1}{Department of Mathematics, University Name, City, Country}%
+  \affiliation{2}{Institute of Applied Sciences, Institution Name, City, Country}}
+\correspondence{Third Author}{third.author@example.org}
+\date{\today}
+\hypersetup{pdftitle={Title of the Article},
+  pdfauthor={First Author; Second Author; Third Author},
+  pdfsubject={}, pdfkeywords={keyword one, keyword two, keyword three}}
+
+\begin{document}
+
+% Full-width title block and abstract, then the two-column body.
+% Keep the abstract as one paragraph (no blank lines) inside this bracket.
+\twocolumn[{%
+  \maketitle
+  \begin{abstract}
+    Replace this paragraph with a concise summary of the problem, the method and
+    the main result, in about 150 words. State what was done, what was found and
+    why it matters, and avoid citations or abbreviations that are not explained
+    within the abstract itself. This template sets the article in two balanced
+    columns with a full-width title block, numbered equations, theorems, figures,
+    tables and a reference list.
+    \keywords{keyword one; keyword two; keyword three; keyword four}
+  \end{abstract}
+}]
+
+\section{Introduction}\label{sec:intro}
+Scientific articles begin by motivating a problem and stating, as plainly as
+possible, what the reader will learn~\cite{smith2020,lee2021}. Replace this text
+with the motivation, the gap in the literature and the main contribution.%
+\footnote{Footnotes are set at the foot of the column in which they are cited;
+keep them short.} The main contributions are:
+\begin{itemize}
+  \item a formulation of the problem (Section~\ref{sec:methods});
+  \item a convergence guarantee (Theorem~\ref{thm:main});
+  \item an empirical comparison (Table~\ref{tab:results}).
+\end{itemize}
+The paper is organized as follows. Section~\ref{sec:background} reviews related
+work and fixes notation, Section~\ref{sec:methods} describes the method,
+Section~\ref{sec:results} reports results, and Sections~\ref{sec:discussion}
+and~\ref{sec:conclusion} discuss and conclude.
+
+\section{Background and Related Work}\label{sec:background}
+Early approaches treated the problem in isolation~\cite{garcia2019}, while later
+work unified it with a broader family of models~\cite{lee2021}. We write
+$\lVert\cdot\rVert$ for the Euclidean norm and
+$\langle\cdot,\cdot\rangle$ for the inner product on $\mathbb{R}^{d}$.
+
+\begin{definition}[Smoothness]\label{def:smooth}
+A differentiable function $f\colon\mathbb{R}^{d}\to\mathbb{R}$ is
+\emph{$L$-smooth} if
+$\lVert\nabla f(x)-\nabla f(y)\rVert\le L\lVert x-y\rVert$
+for all $x,y\in\mathbb{R}^{d}$.
+\end{definition}
+
+\section{Methods}\label{sec:methods}
+\subsection{Objective}
+We fit a parametric model $f(\cdot\,;\theta)$ by minimizing the regularized
+empirical risk
+\begin{equation}\label{eq:objective}
+  J(\theta)=\mathcal{L}(\theta)+\lambda\,\Omega(\theta),
+\end{equation}
+where the data term and the regularizer are
+\begin{align}
+  \mathcal{L}(\theta)&=\frac{1}{n}\sum_{i=1}^{n}\ell\bigl(y_i,f(x_i;\theta)\bigr),\label{eq:loss}\\
+  \Omega(\theta)&=\tfrac{1}{2}\lVert\theta\rVert^{2}.\label{eq:reg}
+\end{align}
+Equation~\eqref{eq:objective} combines~\eqref{eq:loss} and~\eqref{eq:reg}
+through the weight $\lambda>0$.
+
+\subsection{Optimization}
+Our analysis relies on a standard inequality for smooth functions.
+\begin{lemma}[Descent lemma]\label{lem:descent}
+If $f$ is $L$-smooth (Definition~\ref{def:smooth}), then for all
+$x,y\in\mathbb{R}^{d}$
+\begin{align*}
+  f(y)&\le f(x)+\langle\nabla f(x),y-x\rangle\\
+      &\quad+\tfrac{L}{2}\lVert y-x\rVert^{2}.
+\end{align*}
+\end{lemma}
+\begin{proof}
+Put $g(t)=f(x+t(y-x))$. Then $g'(t)-g'(0)\le Lt\lVert y-x\rVert^{2}$ by
+Cauchy--Schwarz and smoothness. Integrating over $[0,1]$ gives
+$g(1)\le g(0)+g'(0)+\tfrac{L}{2}\lVert y-x\rVert^{2}$, which is the claim.
+\end{proof}
+
+\section{Results}\label{sec:results}
+The main result concerns plain gradient descent on Eq.~\eqref{eq:objective}.
+\begin{theorem}[Convergence]\label{thm:main}
+Let $J$ be $L$-smooth and bounded below by $J^{\ast}$. Gradient descent with
+step size $1/L$, that is $\theta_{k+1}=\theta_k-\tfrac{1}{L}\nabla J(\theta_k)$,
+satisfies
+\[
+  \min_{0\le k<K}\lVert\nabla J(\theta_k)\rVert^{2}
+  \le\frac{2L\,\bigl(J(\theta_0)-J^{\ast}\bigr)}{K}.
+\]
+\end{theorem}
+\begin{proof}
+Apply Lemma~\ref{lem:descent} with $x=\theta_k$ and $y=\theta_{k+1}$:
+\[
+  J(\theta_{k+1})\le J(\theta_k)-\tfrac{1}{2L}\lVert\nabla J(\theta_k)\rVert^{2}.
+\]
+Summing over $k=0,\dots,K-1$ and telescoping gives
+$\tfrac{1}{2L}\sum_{k<K}\lVert\nabla J(\theta_k)\rVert^{2}\le J(\theta_0)-J^{\ast}$.
+The minimum is at most the average, which proves the claim.
+\end{proof}
+
+Table~\ref{tab:results} compares the proposed method with two baselines, and
+Figure~\ref{fig:overview} summarizes the behavior over the iterations. The
+values shown are illustrative; replace them with your own data.
+
+\begin{table}[t]
+  \centering\small\arrayrulecolor{plumaccent}
+  \caption{Mean test error over five runs (illustrative values).}\label{tab:results}
+  \begin{tabular}{@{}lccc@{}}
+    \toprule
+    Method & Error (\%) & Time (s) & Params \\
+    \midrule
+    Baseline          & 12.4        & 1.8 & 0.9M \\
+    Method A          & 10.9        & 2.1 & 1.1M \\
+    \textbf{Proposed} & \textbf{9.7} & 2.4 & 1.2M \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{figure}[t]
+  \centering
+  % Replace the placeholder box with: \includegraphics[width=\linewidth]{figures/your-figure}
+  % For a full-width figure use a figure* environment with [t] placement.
+  \fcolorbox{plumrule}{plumtint}{\parbox[c][3.2cm][c]{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{%
+    \centering\plumsans\small\color{plummuted}Figure placeholder}}
+  \caption{Gradient norm versus iteration (placeholder).}\label{fig:overview}
+\end{figure}
+
+\section{Discussion}\label{sec:discussion}
+Interpret the results in light of the question posed in the introduction and
+compare them with prior work~\cite{garcia2019}. Theorem~\ref{thm:main} guarantees
+convergence to a stationary point only; it says nothing about global optimality.
+Discuss limitations, threats to validity and the assumptions on which the
+analysis depends.
+
+\section{Conclusion}\label{sec:conclusion}
+Summarize the contribution in two or three sentences and outline directions for
+future work.
+
+\section*{Acknowledgments}
+The authors thank colleagues and reviewers for their helpful comments.
+
+\section*{Funding}
+This work was supported by [funding body] under grant number [000000].
+
+\section*{Conflict of Interest}
+The authors declare that they have no known competing financial interests or
+personal relationships that could have influenced the work reported in this
+article.
+
+\section*{Data Availability}
+The data and code supporting the findings of this study are available at
+\url{https://example.org/repository}.
+
+\begingroup\small
+\begin{thebibliography}{9}
+\setlength{\itemsep}{2pt}
+\bibitem{smith2020} A.~Smith and B.~Jones, \emph{Title of a journal article},
+  Journal of Examples \textbf{12} (2020), 45--67.
+\bibitem{lee2021} C.~Lee, \emph{Title of a book}, Publisher, City, 2021.
+\bibitem{garcia2019} D.~Garc\'{\i}a, E.~Rossi and F.~Chen, \emph{Title of a
+  conference paper}, Proc.\ Conf.\ Examples, 2019, pp.~101--110.
+\end{thebibliography}
+\endgroup
+
+\end{document}

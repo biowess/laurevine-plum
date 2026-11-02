@@ -1,0 +1,198 @@
+[
+  {
+    "id": "compile-fails",
+    "cat": "Compiling",
+    "q": "My document fails to compile, where do I start?",
+    "tags": "error failed compile undefined control sequence missing brace",
+    "a": "Press **Compile** (or Ctrl/⌘ + Enter) and read the log shown in the PDF pane. Look for the **first** line starting with `!`, later errors are often side effects of it.\n\nThe line right after it (`l.42 …`) gives the source line number. The most common causes:\n\n- **Undefined control sequence**: a typo in a command, or the package that defines it isn't loaded.\n- **Missing $ inserted**: math symbols outside math mode, or an unmatched `$`.\n- **Runaway argument / File ended while scanning**: an unmatched `{` or `\\begin` without its `\\end`.\n- **Environment … undefined**: the package for that environment is missing.\n\nFix the first error, then compile again."
+  },
+  {
+    "id": "errors-where",
+    "cat": "Compiling",
+    "q": "Where can I see the compile errors and log?",
+    "tags": "log errors diagnostics output pane status",
+    "a": "When a compile fails, the PDF pane is replaced by a **compilation log** with the error message and the useful part of the LaTeX output. The status bar also shows *Compile failed*,.\n\nA successful compile replaces the log with the PDF again."
+  },
+  {
+    "id": "no-server",
+    "cat": "Compiling",
+    "q": "“Could not reach the compile server”",
+    "tags": "server node offline connect fetch",
+    "a": "Compiling is done by the small local server, not by the browser. Start it from the project folder:\n\n```\nnode server/server.js\n```\n\nThen reload this page and open it through the address the server prints (not by double-clicking `index.html`)."
+  },
+  {
+    "id": "missing-compiler",
+    "cat": "Compiling",
+    "q": "“xelatex was not found”",
+    "tags": "missing compiler install tex live miktex mactex path",
+    "a": "The server runs `xelatex`, which comes with a LaTeX distribution. Install **TeX Live**, **MacTeX** or **MiKTeX** on the computer that runs the server, make sure `xelatex` is on your `PATH`, then restart the server and compile again.\n\nTo check, run `xelatex --version` in a terminal."
+  },
+  {
+    "id": "missing-package",
+    "cat": "Packages",
+    "q": "“File `xxx.sty' not found”",
+    "tags": "missing package sty install tlmgr",
+    "a": "The package named in the message isn't installed in your TeX distribution.\n\n- **TeX Live / MacTeX:** run `tlmgr install xxx` (you may need `sudo`).\n- **MiKTeX:** install it from the MiKTeX Console, or allow on-the-fly installation.\n\nIf the name is a typo in `\\usepackage{…}`, correct it instead. Then compile again."
+  },
+  {
+    "id": "stale-preview",
+    "cat": "Preview",
+    "q": "The PDF preview doesn't show my latest changes",
+    "tags": "stale old preview pdf outdated refresh not updating",
+    "a": "The preview only changes when you **compile**; editing the source does not update it. Press **Compile** (Ctrl/⌘ + Enter).\n\nIf the compile fails, the PDF is replaced by the error log rather than leaving the old PDF, so an old PDF on screen means the last compile succeeded before your edit.\n\nCross-references and the table of contents need a second compile to settle; compile twice if numbers show as `??`."
+  },
+  {
+    "id": "citations",
+    "cat": "Bibliography",
+    "q": "Citations show as [?] or “undefined citation”",
+    "tags": "citation bibliography bibtex biber cite unresolved question mark bib",
+    "a": "A plain compile does not run BibTeX or biber. Use **References › Update Bibliography**, which compiles with a real bibliography pass and extra runs.\n\nIf it still shows `[?]`, check that:\n\n- the key in `\\cite{key}` matches an entry in your `.bib` file exactly (case matters);\n- the document contains `\\bibliography{…}` (BibTeX) or `\\printbibliography` (biblatex);\n- the `.bib` file is inside the project folder and spelled correctly.\n\nThe message after the update names the tool used and lists any warnings."
+  },
+  {
+    "id": "fonts",
+    "cat": "Fonts",
+    "q": "“The font … cannot be found”",
+    "tags": "font fontspec missing unavailable family setmainfont xelatex",
+    "a": "`fontspec` looks up fonts **by their installed family name**, on the computer running the server.\n\n- Pick a font from the font list in the ribbon, it shows the fonts the server can actually use.\n- Check the spelling and spacing of the name in `\\setmainfont{…}`.\n- To use a font that isn't listed, install it on that computer, then restart the server so the list refreshes.\n\nFonts bundled in the project's `fonts/` folder work without installing."
+  },
+  {
+    "id": "timeout",
+    "cat": "Compiling",
+    "q": "“Compilation timed out after 25 s”",
+    "tags": "timeout slow hang infinite loop stuck too long killed large",
+    "a": "Each compile run is stopped after **25 seconds**. A document that needs longer is usually stuck rather than slow:\n\n- **An infinite loop**: a macro that calls itself, or a `\\newcommand` that redefines something it uses. Undo your latest change and compile again.\n- **Very large images**: shrink or compress huge PNG/JPG files, or use PDF versions.\n- **Heavy packages**: `tikz`/`pgfplots` with thousands of points can be slow. Plot fewer points or use an image exported from Chart.\n- **A first run that builds font caches**: compile once more, it is usually much faster.\n\nIf it only times out while a bibliography is processed, check the `.bib` file for a very large number of entries or a broken one."
+  },
+  {
+    "id": "undefined-reference",
+    "cat": "Cross-references",
+    "q": "?? or “Reference … undefined” instead of a number",
+    "tags": "reference ref label cross reference question marks undefined pageref eqref toc",
+    "a": "`??` means the compiler did not find the label yet. The app re-runs LaTeX automatically when it asks for it, so first **compile once more**. If it stays:\n\n- **Typo:** `\\ref{fig:resutls}` must match `\\label{fig:results}` exactly (labels are case-sensitive).\n- **Label in the wrong place:** put `\\label{…}` **after** `\\caption{…}` inside a figure or table, or right after the `\\section{…}` line.\n- **Label commented out** with `%`, or inside a part of the document that is not included.\n- **Previous run failed:** a hard error stops the `.aux` file from being updated. Fix the first error in the log, then compile again."
+  },
+  {
+    "id": "missing-dollar",
+    "cat": "Math",
+    "q": "“Missing $ inserted”",
+    "tags": "math dollar underscore caret subscript superscript mode",
+    "a": "LaTeX met a math-only character outside math mode. The usual culprits:\n\n- `_` or `^` in normal text (file names, variable names, URLs). Write `\\_` or `\\^{}`, or use `\\texttt{…}` with `\\_`.\n- A math command such as `\\alpha` or `\\frac` without `$…$` around it.\n- An odd number of `$` signs, so one math block never closes.\n\nThe line number in the log (`l.42 …`) points at the spot, or just after it."
+  },
+  {
+    "id": "image-not-found",
+    "cat": "Images",
+    "q": "“File `figure.png' not found” when including an image",
+    "tags": "includegraphics image picture png jpg pdf path folder not found graphicx extension",
+    "a": "Paths are relative to the **project folder** (the one you opened), not to the `.tex` file's own location in a subfolder you have not opened.\n\n- Check the spelling and the **extension**: `figure.PNG` and `figure.png` can differ.\n- Put images in a folder such as `figures/` and write `\\includegraphics{figures/plot.png}`.\n- Avoid spaces and unusual characters in file names. Use `-` or `_`.\n- Make sure the project was opened as a **folder**; if you only opened a single file, its neighbours are not available to the compiler.\n- Load the package: `\\usepackage{graphicx}`."
+  },
+  {
+    "id": "svg-images",
+    "cat": "Images",
+    "q": "My SVG image does not show up",
+    "tags": "svg image vector inkscape convert pdf",
+    "a": "XeLaTeX cannot include **SVG** files directly. Convert the file to **PDF** (best for vector graphics, e.g. in Inkscape or with `rsvg-convert -f pdf`) or to **PNG**, then include that: `\\includegraphics{figures/logo.pdf}`."
+  },
+  {
+    "id": "shell-escape",
+    "cat": "Packages",
+    "q": "`minted` fails: “You must invoke LaTeX with the -shell-escape flag”",
+    "tags": "minted shell escape pygments code highlighting listings",
+    "a": "For safety the app runs LaTeX with **shell escape disabled**, so `minted` and any other package that calls an external program cannot work.\n\nUse **`listings`** instead:\n\n```\n\\usepackage{listings}\n\\begin{lstlisting}[language=Python]\nprint(\"hello\")\n\\end{lstlisting}\n```"
+  },
+  {
+    "id": "unicode-pdflatex",
+    "cat": "Compiling",
+    "q": "“Unicode character … not set up for use with LaTeX”",
+    "tags": "unicode utf8 pdflatex character accent emoji symbol xelatex lualatex",
+    "a": "`pdflatex` only knows a limited set of characters. Either switch to a Unicode-aware engine or remove the character:\n\n- Add `% !TEX program = xelatex` (or `lualatex`) on the first line of the file, or change the **Default compiler** in the preferences.\n- Stay with `pdflatex`: use `\\usepackage[utf8]{inputenc}` with `\\usepackage[T1]{fontenc}` for accents, and LaTeX commands (like `\\textrightarrow`) for symbols.\n\nEmoji and many symbols also need a font that contains them (see *“The font … cannot be found”*)."
+  },
+  {
+    "id": "fontspec-engine",
+    "cat": "Fonts",
+    "q": "“The fontspec package requires either XeTeX or LuaTeX”",
+    "tags": "fontspec setmainfont pdflatex engine xelatex lualatex error",
+    "a": "`fontspec` (used by `\\setmainfont`, `\\setsansfont`…) does not work with `pdflatex`. Select a compatible engine by putting this as the first line:\n\n```\n% !TEX program = xelatex\n```\n\n(or `lualatex`). Without that line, the *Default compiler* preference is used."
+  },
+  {
+    "id": "cjk-missing",
+    "cat": "Fonts",
+    "q": "Chinese, Japanese or Korean text is missing or shows boxes",
+    "tags": "cjk chinese japanese korean xecjk ctex setcjkmainfont blank boxes missing characters",
+    "a": "Use **XeLaTeX** and a CJK package, with a font that is installed on the computer running the server:\n\n```\n% !TEX program = xelatex\n\\usepackage{xeCJK}\n\\setCJKmainfont{Noto Serif CJK SC}\n```\n\nReplace the font name with one you have (e.g. *Noto Serif CJK JP/KR*, *SimSun*, *MS Mincho*). For Chinese documents the `ctex` package or the `ctexart` class sets this up for you."
+  },
+  {
+    "id": "environment-mismatch",
+    "cat": "Compiling",
+    "q": "“\\begin{…} on input line … ended by \\end{…}”",
+    "tags": "begin end environment mismatch ended by unmatched itemize figure table",
+    "a": "An environment was closed with a different name, or one `\\end` is missing. The message names the line where the `\\begin` was opened.\n\n- Look for a `\\begin{itemize}` / `\\begin{figure}` without its matching `\\end`.\n- Check that nested environments close in reverse order.\n- A stray `%` can comment out an `\\end{…}` by accident.\n\nFix the first such error, then compile again; the following ones are often side effects."
+  },
+  {
+    "id": "extra-brace",
+    "cat": "Compiling",
+    "q": "“Missing } inserted”, “Extra }” or “Runaway argument”",
+    "tags": "brace braces curly runaway argument missing extra balanced",
+    "a": "Curly braces are unbalanced. Common causes:\n\n- A `{` was never closed, or a `}` was deleted while editing.\n- A command argument that contains a blank line (a paragraph break is not allowed inside many arguments, such as `\\section{…}` or `\\textbf{…}`).\n- A `%` comment swallowing the closing brace at the end of a line.\n\nWork from the first error in the log; later brace errors are often side effects of it."
+  },
+  {
+    "id": "option-clash",
+    "cat": "Packages",
+    "q": "“Option clash for package …”",
+    "tags": "option clash package loaded twice xcolor hyperref geometry conflict",
+    "a": "The same package was loaded twice with different options, often because another package loads it for you (for instance `tikz` or `beamer` loads `xcolor`).\n\nLoad it **once**, with every option, and **before** the package that loads it, e.g. `\\usepackage[dvipsnames]{xcolor}`. Alternatively pass the options globally in the document class: `\\documentclass[dvipsnames]{article}`."
+  },
+  {
+    "id": "biber-backend",
+    "cat": "Bibliography",
+    "q": "biblatex: “Please (re)run Biber” or the bibliography stays empty",
+    "tags": "biblatex biber backend bibtex bibliography empty rerun",
+    "a": "`biblatex` uses **Biber** by default, `natbib` and plain `\\bibliography` use **BibTeX**. The app detects which one your preamble needs and runs it.\n\n- Make sure the right tool is installed: `biber --version` / `bibtex --version`.\n- Check that `\\addbibresource{refs.bib}` (biblatex) or `\\bibliography{refs}` (BibTeX, no `.bib`) points at a file that exists in the project folder.\n- If you changed `backend=bibtex` or `backend=biber`, delete the old generated `.bbl`, `.bcf` and `.blg` files (never your own `.bib`) and compile again.\n- Cite at least one entry with `\\cite{…}` (or `\\nocite{*}`), otherwise there is nothing to print."
+  },
+  {
+    "id": "toc-outdated",
+    "cat": "Cross-references",
+    "q": "The table of contents is empty or out of date",
+    "tags": "table of contents toc tableofcontents lof lot headings section starred empty",
+    "a": "The contents list is built from the headings of the **previous** run, so a new heading can need one more compile (the app repeats runs automatically when LaTeX asks for it).\n\n- Make sure `\\tableofcontents` is placed in the document body, after `\\begin{document}`.\n- Starred headings such as `\\section*{…}` are **not** listed. Use `\\section{…}`, or add them with `\\addcontentsline`.\n- For lists of figures/tables use `\\listoffigures` / `\\listoftables`; the captions must use `\\caption`."
+  },
+  {
+    "id": "float-placement",
+    "cat": "Layout",
+    "q": "My figure or table appears on a different page than where I put it",
+    "tags": "figure table float placement here htbp page position float package",
+    "a": "Figures and tables are *floats*: LaTeX moves them to a good position. To keep them closer to the text:\n\n- Allow more positions: `\\begin{figure}[htbp]`.\n- Force the exact spot with the `float` package: `\\usepackage{float}` and `\\begin{figure}[H]`.\n- Move the `\\begin{figure}` block earlier in the source, since a float can only move **later**, never earlier.\n- Make it smaller, e.g. `\\includegraphics[width=0.8\\linewidth]{…}`.\n\n**“Too many unprocessed floats”** means too many floats are waiting: add `\\clearpage` or use `[H]` for some of them."
+  },
+  {
+    "id": "table-too-wide",
+    "cat": "Layout",
+    "q": "My table runs off the page",
+    "tags": "table wide overflow tabular margin resizebox tabularx width columns",
+    "a": "Pick one of these:\n\n- **Wrap text in cells** with fixed-width columns: `p{4cm}`, or `\\usepackage{tabularx}` and `\\begin{tabularx}{\\textwidth}{lXX}`.\n- **Scale the whole table**: `\\resizebox{\\textwidth}{!}{ …tabular… }` (needs `graphicx`).\n- Reduce the font: `\\small` or `\\footnotesize` before the table, or lower `\\tabcolsep`.\n- Rotate a very wide table onto its own page with `\\usepackage{pdflscape}` and the `landscape` environment."
+  },
+  {
+    "id": "overfull-hbox",
+    "cat": "Layout",
+    "q": "“Overfull \\hbox” warnings and text sticking into the margin",
+    "tags": "overfull underfull hbox vbox warning margin line too long hyphenation url",
+    "a": "These are **warnings**, not errors: the PDF is still produced. *Overfull \\hbox (12.3pt too wide)* means a line could not be broken and sticks out by that much.\n\n- Long words, URLs or file names: use `\\usepackage{microtype}`, `\\url{…}` (with `hyperref` or `url`), or add hints such as `long\\-word`.\n- Allow looser spacing for a paragraph with `\\begin{sloppypar}…\\end{sloppypar}`.\n- Ignore warnings smaller than about 1–2 pt; they are not visible."
+  },
+  {
+    "id": "chart-python",
+    "cat": "Charts",
+    "q": "Chart says Python or Matplotlib is missing",
+    "tags": "chart matplotlib python pip plot graph install setup",
+    "a": "Insert ▸ **Chart** is drawn by a small Python script, so the computer that runs the server needs **Python 3 with Matplotlib**:\n\n```\npip install matplotlib\n```\n\nMake sure `python3` (or `python` on Windows) is on your `PATH`, or set the `PYTHON` environment variable to the interpreter you want, then **restart the server**. Everything except Chart works without Python."
+  },
+  {
+    "id": "folder-access",
+    "cat": "Files",
+    "q": "I can't open or save into my project folder",
+    "tags": "open folder save permission chromium firefox safari download file access directory",
+    "a": "- **With the local server** (`node server/server.js`), open the app from the address it prints, e.g. `http://localhost:5174`; the in-app picker then works in any browser.\n- **Without it**, real folder access needs a **Chromium** browser (Chrome, Edge, Brave). Other browsers fall back to downloading a `.tex` file instead of saving in place.\n- If a save is refused, open the folder again from the app (**Open Folder**) so access is granted, and check that the folder is not read-only or inside a synced/locked location.\n- Do not open the project from `file://` (double-clicking `index.html`)."
+  },
+  {
+    "id": "pdf-blank",
+    "cat": "Preview",
+    "q": "The PDF preview is blank or shows an error after a successful compile",
+    "tags": "blank pdf white page empty preview viewer error nothing shown",
+    "a": "- The document may genuinely be empty: check that your text is **between** `\\begin{document}` and `\\end{document}`.\n- A `\\begin{comment}`/`\\iffalse` or an unclosed `%` block can hide everything after it.\n- Compile again and open the log: a fatal error stops a new PDF from being produced, so the viewer cannot show your latest text.\n- Use **fit page / fit width** in the viewer if the page seems to be off-screen after zooming."
+  }
+]

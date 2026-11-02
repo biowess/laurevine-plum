@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "name": "Laurevine Plum",
+  "releaseDate": "2026-11-02",
+  "minimumSupportedVersion": "1.0.0",
+  "releaseNotes": "Initial release of Laurevine Plum.",
+  "downloads": {
+    "linux": "",
+    "windows": ""
+  }
+}

@@ -1,0 +1,169 @@
+placeholder that shows the final skeleton of this folder to save on space
+├── amiri
+│   ├── Amiri-BoldItalic.ttf
+│   ├── Amiri-Bold.ttf
+│   ├── Amiri-Italic.ttf
+│   ├── Amiri-Regular.ttf
+│   └── OFL.txt
+├── arimo
+│   ├── Arimo-Italic[wght].ttf
+│   ├── Arimo[wght].ttf
+│   └── OFL.txt
+├── bitter
+│   ├── Bitter-Italic[wght].ttf
+│   ├── Bitter[wght].ttf
+│   └── OFL.txt
+├── cairo
+│   ├── Cairo[slnt,wght].ttf
+│   └── OFL.txt
+├── caveat
+│   ├── Caveat[wght].ttf
+│   └── OFL.txt
+├── cinzel
+│   ├── Cinzel[wght].ttf
+│   └── OFL.txt
+├── cormorant-garamond
+│   ├── CormorantGaramond-Italic[wght].ttf
+│   ├── CormorantGaramond[wght].ttf
+│   └── OFL.txt
+├── eb-garamond
+│   ├── EBGaramond-Italic[wght].ttf
+│   ├── EBGaramond[wght].ttf
+│   └── OFL.txt
+├── fira-code
+│   ├── FiraCode[wght].ttf
+│   └── OFL.txt
+├── fira-sans
+│   ├── FiraSans-Bold.ttf
+│   ├── FiraSans-Italic.ttf
+│   ├── FiraSans-Medium.ttf
+│   ├── FiraSans-Regular.ttf
+│   └── OFL.txt
+├── fonts.css
+├── inconsolata
+│   ├── Inconsolata[wdth,wght].ttf
+│   └── OFL.txt
+├── inter
+│   ├── Inter-Italic[opsz,wght].ttf
+│   ├── Inter[opsz,wght].ttf
+│   └── OFL.txt
+├── jetbrains-mono
+│   ├── JetBrainsMono-Italic[wght].ttf
+│   ├── JetBrainsMono[wght].ttf
+│   └── OFL.txt
+├── lato
+│   ├── Lato-BlackItalic.ttf
+│   ├── Lato-BoldItalic.ttf
+│   ├── Lato-Bold.ttf
+│   ├── Lato-Italic.ttf
+│   ├── Lato-Medium.ttf
+│   ├── Lato-Regular.ttf
+│   └── OFL.txt
+├── libre-baskerville
+│   ├── LibreBaskerville-Italic[wght].ttf
+│   ├── LibreBaskerville[wght].ttf
+│   └── OFL.txt
+├── lora
+│   ├── Lora-Italic[wght].ttf
+│   ├── Lora[wght].ttf
+│   └── OFL.txt
+├── merriweather
+│   ├── Merriweather-Italic[opsz,wdth,wght].ttf
+│   ├── Merriweather[opsz,wdth,wght].ttf
+│   └── OFL.txt
+├── montserrat
+│   ├── Montserrat-Italic[wght].ttf
+│   ├── Montserrat[wght].ttf
+│   └── OFL.txt
+├── noto-sans-arabic
+│   ├── NotoSansArabic[wdth,wght].ttf
+│   └── OFL.txt
+├── open-dyslexic
+│   ├── OFL.txt
+│   ├── OpenDyslexic-BoldItalic.ttf
+│   ├── OpenDyslexic-Bold.ttf
+│   ├── OpenDyslexic-Italic.ttf
+│   └── OpenDyslexic-Regular.ttf
+├── open-sans
+│   ├── OFL.txt
+│   ├── OpenSans-Italic[wdth,wght].ttf
+│   └── OpenSans[wdth,wght].ttf
+├── oswald
+│   ├── OFL.txt
+│   └── Oswald[wght].ttf
+├── outfit
+│   ├── OFL.txt
+│   └── Outfit[wght].ttf
+├── pacifico
+│   ├── OFL.txt
+│   └── Pacifico-Regular.ttf
+├── playfair-display
+│   ├── OFL.txt
+│   ├── PlayfairDisplay-Italic[wght].ttf
+│   └── PlayfairDisplay[wght].ttf
+├── plus-jakarta-sans
+│   ├── OFL.txt
+│   ├── PlusJakartaSans-Italic[wght].ttf
+│   └── PlusJakartaSans[wght].ttf
+├── poppins
+│   ├── OFL.txt
+│   ├── Poppins-BlackItalic.ttf
+│   ├── Poppins-BoldItalic.ttf
+│   ├── Poppins-Bold.ttf
+│   ├── Poppins-Italic.ttf
+│   ├── Poppins-Medium.ttf
+│   ├── Poppins-Regular.ttf
+│   └── Poppins-SemiBold.ttf
+├── pt-serif
+│   ├── OFL.txt
+│   ├── PT_Serif-Web-BoldItalic.ttf
+│   ├── PT_Serif-Web-Bold.ttf
+│   ├── PT_Serif-Web-Italic.ttf
+│   └── PT_Serif-Web-Regular.ttf
+├── raleway
+│   ├── OFL.txt
+│   ├── Raleway-Italic[wght].ttf
+│   └── Raleway[wght].ttf
+├── roboto
+│   ├── OFL.txt
+│   ├── Roboto-Italic[wdth,wght].ttf
+│   └── Roboto[wdth,wght].ttf
+├── scheherazade-new
+│   ├── OFL.txt
+│   ├── ScheherazadeNew-Bold.ttf
+│   ├── ScheherazadeNew-Medium.ttf
+│   ├── ScheherazadeNew-Regular.ttf
+│   └── ScheherazadeNew-SemiBold.ttf
+├── source-code-pro
+│   ├── OFL.txt
+│   ├── SourceCodePro-Italic[wght].ttf
+│   └── SourceCodePro[wght].ttf
+├── source-sans-3
+│   ├── OFL.txt
+│   ├── SourceSans3-Italic[wght].ttf
+│   └── SourceSans3[wght].ttf
+├── space-grotesk
+│   ├── OFL.txt
+│   └── SpaceGrotesk[wght].ttf
+├── space-mono
+│   ├── OFL.txt
+│   ├── SpaceMono-BoldItalic.ttf
+│   ├── SpaceMono-Bold.ttf
+│   ├── SpaceMono-Italic.ttf
+│   └── SpaceMono-Regular.ttf
+├── spline-sans
+│   ├── OFL.txt
+│   └── SplineSans[wght].ttf
+├── tajawal
+│   ├── OFL.txt
+│   ├── Tajawal-Bold.ttf
+│   ├── Tajawal-Medium.ttf
+│   └── Tajawal-Regular.ttf
+└── tex-gyre-termes
+    ├── LICENSE.txt
+    ├── texgyretermes-bolditalic.ttf
+    ├── texgyretermes-bold.ttf
+    ├── texgyretermes-italic.ttf
+    └── texgyretermes-regular.ttf
+
+39 directories, 128 files

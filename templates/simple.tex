@@ -1,0 +1,164 @@
+% !TEX program = xelatex
+% ---------------------------------------------------------------------------
+% Simple -- a clean, general-purpose document.
+% Everything above \begin{document} is styling. Lines tagged CUSTOMIZE are the
+% ones you are most likely to change; the body can be rewritten freely.
+% ---------------------------------------------------------------------------
+\documentclass[12pt,a4paper]{article}
+
+% ---------- Packages ----------
+\usepackage{fontspec}
+\usepackage[a4paper,top=3cm,bottom=3.2cm,left=3.2cm,right=3.2cm]{geometry} % CUSTOMIZE: margins
+\usepackage{amsmath,amssymb}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{parskip}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{fancyvrb}
+\usepackage{framed}
+
+% ---------- Fonts ----------
+% TeX Gyre Termes is the primary font. TeX Gyre Heros is not in the bundled
+% font catalogue, so headings stay in Termes (bold) rather than a sans face.
+\setmainfont{TeX Gyre Termes}                    % CUSTOMIZE: body font
+\setmonofont[Scale=MatchLowercase]{Inconsolata}  % code and verbatim text
+
+% ---------- Palette: neutrals plus one accent ----------
+\definecolor{Ink}{HTML}{222222}     % body text
+\definecolor{Muted}{HTML}{666666}   % author, date, page numbers
+\definecolor{Rule}{HTML}{CCCCCC}    % hairlines
+\definecolor{Accent}{HTML}{2B5C84}  % CUSTOMIZE: the single accent colour
+\AtBeginDocument{\color{Ink}}
+
+% ---------- Text, spacing and page ----------
+\linespread{1.08}                                     % CUSTOMIZE: line spacing
+\setlength{\parskip}{7pt plus 1.5pt minus 1pt}        % CUSTOMIZE: paragraph spacing
+\setlength{\emergencystretch}{3em}
+\setcounter{secnumdepth}{2}                           % CUSTOMIZE: 0 = no heading numbers
+
+% Page number only, small and centred.
+\makeatletter
+\renewcommand{\ps@plain}{%
+  \let\@mkboth\@gobbletwo
+  \let\@oddhead\@empty \let\@evenhead\@empty
+  \def\@oddfoot{\reset@font\hfil\small\color{Muted}\thepage\hfil}%
+  \let\@evenfoot\@oddfoot}
+\makeatother
+
+% ---------- Headings ----------
+\titleformat{\section}
+  {\fontsize{15}{18}\selectfont\bfseries\color{Ink}}
+  {\color{Accent}\thesection}{0.7em}{}
+  [\vspace{2pt}{\color{Rule}\titlerule[0.4pt]}]
+\titleformat{\subsection}
+  {\fontsize{13}{16}\selectfont\bfseries\color{Ink}}
+  {\color{Accent}\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}
+  {\normalsize\bfseries\itshape\color{Ink}}
+  {\color{Accent}\thesubsubsection}{0.5em}{}
+\titlespacing*{\section}{0pt}{2.6ex plus 0.6ex minus 0.2ex}{1.6ex plus 0.2ex}
+\titlespacing*{\subsection}{0pt}{2ex plus 0.4ex minus 0.2ex}{0.9ex plus 0.2ex}
+\titlespacing*{\subsubsection}{0pt}{1.6ex plus 0.3ex minus 0.2ex}{0.6ex plus 0.1ex}
+
+% ---------- Title block (optional, see \maketitle in the body) ----------
+% Any of \title, \author, \date may be left empty to omit that line.
+\makeatletter
+\renewcommand{\maketitle}{%
+  \begingroup\raggedright
+  \ifx\@title\@empty\else
+    {\fontsize{24}{29}\selectfont\bfseries\color{Ink}\@title\par}\vspace{0.7em}%
+  \fi
+  \ifx\@author\@empty\else
+    {\large\color{Muted}\@author\par}\vspace{0.25em}%
+  \fi
+  \ifx\@date\@empty\else
+    {\itshape\color{Muted}\@date\par}%
+  \fi
+  \vspace{1em}{\color{Accent}\rule{3.5em}{1.2pt}}\par\vspace{0.8em}%
+  \endgroup}
+\makeatother
+
+% ---------- Lists ----------
+\setlist{itemsep=0.25em, parsep=0.35em, topsep=0.2em, partopsep=0pt, leftmargin=1.8em, labelsep=0.6em}
+\setlist[itemize,1]{label=\textcolor{Accent}{\textbullet}}
+\setlist[itemize,2]{label=\textcolor{Accent}{\textendash}}
+\setlist[enumerate,1]{label=\textcolor{Accent}{\arabic*.}}
+\setlist[enumerate,2]{label=\textcolor{Accent}{(\alph*)}}
+
+% ---------- Quotations: italic with a thin accent bar ----------
+\renewenvironment{quote}
+  {\def\FrameCommand{\hspace{0.2em}{\color{Accent}\vrule width 1.4pt}\hspace{1em}}%
+   \MakeFramed{\advance\hsize-\width \FrameRestore}\itshape}
+  {\endMakeFramed}
+\let\quotation\quote
+\let\endquotation\endquote
+
+% ---------- Code: verbatim blocks with a hairline bar ----------
+\RecustomVerbatimEnvironment{verbatim}{Verbatim}{%
+  fontsize=\small, frame=leftline, framerule=1.2pt, rulecolor=\color{Rule},
+  framesep=1em, xleftmargin=0.3em}
+
+% ---------- Links (load last) ----------
+\usepackage[colorlinks=true,linkcolor=Accent,citecolor=Accent,urlcolor=Accent]{hyperref}
+\urlstyle{same}
+
+% ---------- Document info ----------
+% CUSTOMIZE: edit or leave a field empty to omit it. To drop the title block
+% entirely, delete these three lines and \maketitle in the body.
+\title{A Simple, Elegant Document}
+\author{Your Name}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+Replace this text with your own. Paragraphs are separated by a blank line and
+set in \textbf{TeX Gyre Termes}, with \emph{emphasis} in italics and links such
+as \href{https://www.ctan.org}{CTAN} or \url{https://www.overleaf.com} picking
+up the accent colour. Add or remove sections freely; the styling lives entirely
+in the preamble.
+
+\section{Lists and Quotations}
+\subsection{Lists}
+\begin{itemize}
+  \item Bulleted lists use a small accent marker.
+  \item Items stay tightly spaced and easy to scan.
+  \begin{itemize}
+    \item Nested items use a dash.
+  \end{itemize}
+\end{itemize}
+
+\begin{enumerate}
+  \item Numbered lists share the same quiet rhythm.
+  \item Sub-levels switch to lettered labels.
+  \begin{enumerate}
+    \item Like this one.
+  \end{enumerate}
+\end{enumerate}
+
+\subsection{Quotations}
+\begin{quote}
+  Use the \texttt{quote} environment for short passages taken from another
+  source; it is set in italics beside a thin accent bar.
+\end{quote}
+
+\section{Equations}
+Inline mathematics such as $e^{i\pi} + 1 = 0$ flows with the text, while
+display equations are numbered and can be referenced, as in
+Equation~\eqref{eq:gauss}:
+\begin{equation}\label{eq:gauss}
+  \int_{-\infty}^{\infty} e^{-x^{2}}\,dx = \sqrt{\pi}.
+\end{equation}
+
+\section{Code}
+Short snippets use \texttt{inline code}, and longer listings go in a
+\texttt{verbatim} block:
+\begin{verbatim}
+def greet(name):
+    return f"Hello, {name}!"
+\end{verbatim}
+
+\end{document}
